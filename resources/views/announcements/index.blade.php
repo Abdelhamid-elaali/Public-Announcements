@@ -74,6 +74,15 @@
     <div class="col-md-9">
         @forelse($announcements as $announcement)
             <div class="card mb-3">
+                <div class="row g-0">
+                    @if($announcement->image)
+                        <div class="col-md-4">
+                            <img src="{{ asset('storage/' . $announcement->image) }}" 
+                                 class="img-fluid rounded-start" 
+                                 alt="Image for {{ $announcement->title }}">
+                        </div>
+                    @endif
+                    <div class="col-md-{{ $announcement->image ? '8' : '12' }}">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
                         <h5 class="card-title">
@@ -89,13 +98,17 @@
                     <p class="card-text">{{ Str::limit($announcement->content, 200) }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">
-                            Published {{ $announcement->publish_at->diffForHumans() }}
+                            Published {{ $announcement->publish_at ? $announcement->publish_at->diffForHumans() : 'recently' }}
                         </small>
                         <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-sm btn-primary">
                             Read More
                         </a>
                     </div>
                 </div>
+                @if($announcement->image)
+                        </div>
+                    </div>
+                @endif
             </div>
         @empty
             <div class="alert alert-info">

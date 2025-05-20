@@ -50,4 +50,10 @@ class AlertSubscriberController extends Controller
 
         return back()->with('success', 'Alert sent successfully.');
     }
+
+    public function destroy(AlertSubscriber $subscriber)
+    {
+        $subscriber->delete();
+        return back()->with('success', 'Subscriber removed successfully.');
+    }
 }

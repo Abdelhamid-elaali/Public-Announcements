@@ -38,15 +38,15 @@
                             <td>{{ $event->registrations_count ?? 0 }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('events.show', $event) }}" 
-                                       class="btn btn-sm btn-info me-1" target="_blank">
+                                    <a href="{{ route('admin.events.show', $event) }}" 
+                                       class="btn btn-sm btn-info me-1">
                                         View
                                     </a>
-                                    <a href="{{ route('admin.events.edit', $event->id) }}" 
+                                    <a href="{{ route('admin.events.edit', $event) }}" 
                                        class="btn btn-sm btn-primary">
                                         Edit
                                     </a>
-                                    <form action="{{ route('admin.events.destroy', $event->id) }}" 
+                                    <form action="{{ route('admin.events.destroy', $event) }}" 
                                           method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')

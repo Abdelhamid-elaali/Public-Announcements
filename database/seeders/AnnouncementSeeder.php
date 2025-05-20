@@ -37,6 +37,22 @@ class AnnouncementSeeder extends Seeder
                 'status' => 'draft',
                 'publish_at' => null,
                 'created_by' => $admin->id
+            ],
+            [
+                'title' => 'Annual Community Meetup',
+                'content' => 'Join us for our annual community meetup where we will discuss upcoming projects and network with fellow members.',
+                'category' => 'event',
+                'status' => 'published',
+                'publish_at' => now(),
+                'created_by' => $admin->id
+            ],
+            [
+                'title' => 'Tech Workshop Series',
+                'content' => 'A series of technical workshops covering various topics. Register now to secure your spot!',
+                'category' => 'event',
+                'status' => 'published',
+                'publish_at' => now()->addWeek(),
+                'created_by' => $admin->id
             ]
         ];
 

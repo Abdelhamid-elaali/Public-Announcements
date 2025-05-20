@@ -23,10 +23,7 @@
                         <a class="nav-link {{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}" 
                            href="{{ route('admin.announcements.index') }}">Announcements</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}" 
-                           href="{{ route('admin.events.index') }}">Events</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" 
                            href="{{ route('admin.subscribers.index') }}">Subscribers</a>

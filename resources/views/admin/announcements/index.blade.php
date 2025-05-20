@@ -10,8 +10,47 @@
     </a>
 </div>
 
-<div class="card">
-    <div class="card-body">
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Categories</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{{ route('admin.announcements.index') }}" 
+                   class="list-group-item list-group-item-action {{ !request('category') ? 'active' : '' }}">
+                    All Categories
+                    <span class="badge bg-secondary float-end">
+                        {{ $categoryCounts->sum() }}
+                    </span>
+                </a>
+                <a href="{{ route('admin.announcements.index', ['category' => 'urgent']) }}" 
+                   class="list-group-item list-group-item-action {{ request('category') === 'urgent' ? 'active' : '' }}">
+                    Urgent
+                    <span class="badge bg-danger float-end">
+                        {{ $categoryCounts['urgent'] ?? 0 }}
+                    </span>
+                </a>
+                <a href="{{ route('admin.announcements.index', ['category' => 'event']) }}" 
+                   class="list-group-item list-group-item-action {{ request('category') === 'event' ? 'active' : '' }}">
+                    Event
+                    <span class="badge bg-success float-end">
+                        {{ $categoryCounts['event'] ?? 0 }}
+                    </span>
+                </a>
+                <a href="{{ route('admin.announcements.index', ['category' => 'general']) }}" 
+                   class="list-group-item list-group-item-action {{ request('category') === 'general' ? 'active' : '' }}">
+                    General Information
+                    <span class="badge bg-info float-end">
+                        {{ $categoryCounts['general'] ?? 0 }}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -43,8 +82,8 @@
                             <td>{{ $announcement->views }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('announcements.show', $announcement->id) }}" 
-                                       class="btn btn-sm btn-info me-1" target="_blank">
+                                    <a href="{{ route('admin.announcements.show', $announcement) }}" 
+                                       class="btn btn-sm btn-info me-1">
                                         View
                                     </a>
                                     <a href="{{ route('admin.announcements.edit', $announcement) }}" 
@@ -74,7 +113,9 @@
 
         <div class="d-flex justify-content-center mt-4">
             {{ $announcements->links() }}
+            </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

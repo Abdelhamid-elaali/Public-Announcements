@@ -26,6 +26,7 @@ Route::middleware(['auth', 'role:admin,supervisor'])->group(function () {
         Route::get('/announcements', [AnnouncementController::class, 'adminIndex'])->name('announcements.index');
         Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
         Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+        Route::get('/announcements/{announcement}', [AnnouncementController::class, 'adminShow'])->name('announcements.show');
         Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
         Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
         Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
@@ -34,10 +35,13 @@ Route::middleware(['auth', 'role:admin,supervisor'])->group(function () {
         Route::get('/events', [EventController::class, 'adminIndex'])->name('events.index');
         Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
         Route::post('/events', [EventController::class, 'store'])->name('events.store');
+        Route::get('/events/{event}', [EventController::class, 'adminShow'])->name('events.show');
         Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
         Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+        // Subscriber routes
         Route::get('/subscribers', [AlertSubscriberController::class, 'adminIndex'])->name('subscribers.index');
+        Route::delete('/subscribers/{subscriber}', [AlertSubscriberController::class, 'destroy'])->name('subscribers.destroy');
         
         // Admin-only routes
         Route::middleware(['role:admin'])->group(function () {

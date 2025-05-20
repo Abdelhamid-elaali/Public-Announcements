@@ -40,8 +40,13 @@ class EventController extends Controller
 
     public function adminIndex()
     {
-        $events = Event::orderBy('start_date')->paginate(15);
+        $events = Event::orderBy('event_date', 'desc')->paginate(15);
         return view('admin.events.index', compact('events'));
+    }
+
+    public function adminShow(Event $event)
+    {
+        return view('admin.events.show', compact('event'));
     }
 
     public function create()
