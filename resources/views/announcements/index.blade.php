@@ -90,8 +90,8 @@
                                 {{ $announcement->title }}
                             </a>
                         </h5>
-                        <span class="badge bg-{{ $announcement->category === 'urgent' ? 'danger' : 
-                                                ($announcement->category === 'event' ? 'success' : 'info') }}">
+                        <span class="badge {{ $announcement->category === 'urgent' ? 'bg-danger' : 
+                                                ($announcement->category === 'event' ? 'bg-success' : 'general-badge') }}">
                             {{ ucfirst($announcement->category) }}
                         </span>
                     </div>

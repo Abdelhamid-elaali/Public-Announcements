@@ -58,7 +58,7 @@
                         <th>Title</th>
                         <th>Category</th>
                         <th>Status</th>
-                        <th>Publish Date</th>
+                        <th>Created Date</th>
                         <th>Views</th>
                         <th>Actions</th>
                     </tr>
@@ -68,8 +68,8 @@
                         <tr>
                             <td>{{ $announcement->title }}</td>
                             <td>
-                                <span class="badge bg-{{ $announcement->category === 'urgent' ? 'danger' : 
-                                                        ($announcement->category === 'event' ? 'success' : 'info') }}">
+                                <span class="badge {{ $announcement->category === 'urgent' ? 'bg-danger' : 
+                                                        ($announcement->category === 'event' ? 'bg-success' : ($announcement->category === 'general' ? 'bg-secondary' : 'bg-info')) }}">
                                     {{ ucfirst($announcement->category) }}
                                 </span>
                             </td>
@@ -78,25 +78,26 @@
                                     {{ ucfirst($announcement->status) }}
                                 </span>
                             </td>
-                            <td>{{ $announcement->publish_at ? $announcement->publish_at->format('Y-m-d H:i') : 'Not scheduled' }}</td>
+                            <td>{{ $announcement->created_at->format('Y-m-d H:i') }}</td>
                             <td>{{ $announcement->views }}</td>
                             <td>
-                                <div class="btn-group" role="group">
+                                <div class="d-flex gap-2">
                                     <a href="{{ route('admin.announcements.show', $announcement) }}" 
-                                       class="btn btn-sm btn-info me-1">
-                                        View
+                                       class="btn action-btn btn-outline-info" data-bs-toggle="tooltip" title="View">
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="{{ route('admin.announcements.edit', $announcement) }}" 
-                                       class="btn btn-sm btn-primary">
-                                        Edit
+                                       class="btn action-btn btn-outline-warning" data-bs-toggle="tooltip" title="Edit">
+                                        <i class="fas fa-pen-to-square"></i>
                                     </a>
                                     <form action="{{ route('admin.announcements.destroy', $announcement) }}" 
                                           method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" 
-                                                onclick="return confirm('Are you sure you want to delete this announcement?')">
-                                            Delete
+                                        <button type="submit" class="btn action-btn btn-outline-danger" 
+                                                onclick="return confirm('Are you sure you want to delete this announcement?')"
+                                                data-bs-toggle="tooltip" title="Delete">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -119,3 +120,14 @@
 </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>
+@endpush

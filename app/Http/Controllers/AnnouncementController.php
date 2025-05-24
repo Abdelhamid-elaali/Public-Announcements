@@ -15,12 +15,6 @@ class AnnouncementController extends Controller
         // Filter by status
         $query->where('status', 'published');
 
-        // Filter by publish date
-        $query->where(function($q) {
-            $q->where('publish_at', '<=', now())
-              ->orWhereNull('publish_at');
-        });
-
         // Filter by category if provided
         if ($request->filled('category')) {
             $query->where('category', $request->category);
@@ -36,7 +30,7 @@ class AnnouncementController extends Controller
         }
 
         // Get results
-        $announcements = $query->orderBy('publish_at', 'desc')
+        $announcements = $query->orderBy('created_at', 'desc')
                               ->paginate(10)
                               ->withQueryString();
         
@@ -98,17 +92,28 @@ class AnnouncementController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $currentTime = now();
         $validated['created_by'] = auth()->id();
+        
+        // Set created_at and publish_at to current time for published announcements
+        if ($validated['status'] === 'published') {
+            $validated['publish_at'] = $currentTime;
+            $announcement = new Announcement($validated);
+            $announcement->created_at = $currentTime;
+            $announcement->updated_at = $currentTime;
+        } else {
+            $announcement = new Announcement($validated);
+        }
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/announcements');
-            $validated['image'] = 'announcements/' . basename($imagePath);
+            $announcement->image = 'announcements/' . basename($imagePath);
             
             // Ensure the file is publicly accessible
             Storage::disk('public')->setVisibility('announcements/' . basename($imagePath), 'public');
         }
         
-        Announcement::create($validated);
+        $announcement->save();
         
         return redirect()->route('admin.announcements.index')
             ->with('success', 'Announcement created successfully.');
@@ -129,6 +134,15 @@ class AnnouncementController extends Controller
             'publish_at' => 'nullable|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        $currentTime = now();
+        
+        // If changing to published status, update timestamps
+        if ($validated['status'] === 'published' && $announcement->status !== 'published') {
+            $validated['publish_at'] = $currentTime;
+            $announcement->created_at = $currentTime;
+            $announcement->updated_at = $currentTime;
+        }
 
         if ($request->hasFile('image')) {
             // Delete old image if it exists

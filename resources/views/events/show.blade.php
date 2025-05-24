@@ -12,32 +12,36 @@
                 <div class="card-body">
                     <div class="mb-4">
                         <h5>Description</h5>
-                        <p>{{ $event->description }}</p>
+                        <p>{!! nl2br(e($event->content)) !!}</p>
                     </div>
 
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <h5>Event Details</h5>
                             <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <strong><i class="fas fa-calendar"></i> Date & Time:</strong><br>
-                                    {{ $event->event_date->format('M d, Y H:i') }}
-                                </li>
+                                @if($event->event_date)
+                                    <li class="mb-2">
+                                        <strong><i class="fas fa-calendar"></i> Date & Time:</strong><br>
+                                        {{ $event->event_date->format('M d, Y H:i') }}
+                                    </li>
+                                @endif
                                 @if($event->location)
                                     <li class="mb-2">
                                         <strong><i class="fas fa-map-marker-alt"></i> Location:</strong><br>
                                         {{ $event->location }}
                                     </li>
                                 @endif
-                                <li>
-                                    <strong><i class="fas fa-users"></i> Capacity:</strong><br>
-                                    {{ $event->capacity }}
-                                </li>
+                                @if($event->max_participants)
+                                    <li>
+                                        <strong><i class="fas fa-users"></i> Capacity:</strong><br>
+                                        {{ $event->max_participants }}
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h5>Registration</h5>
-                            <form action="{{ route('events.register', $event) }}" method="POST">
+                            <form action="{{ route('events.register', $event->id) }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -64,7 +68,7 @@
                         @if(auth()->user()->role === 'admin')
                             <div class="mt-4 border-top pt-4">
                                 <h5>Registrations</h5>
-                                @if($event->registrations->isEmpty())
+                                @if(!$event->registrations || $event->registrations->isEmpty())
                                     <p>No registrations yet.</p>
                                 @else
                                     <div class="table-responsive">
@@ -94,19 +98,6 @@
 
                     <div class="mt-4">
                         <a href="{{ route('events.index') }}" class="btn btn-secondary">Back to Events</a>
-                        @auth
-                            @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-warning">Edit Event</a>
-                                <form action="{{ route('admin.events.destroy', $event) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" 
-                                            onclick="return confirm('Are you sure you want to delete this event?')">
-                                        Delete Event
-                                    </button>
-                                </form>
-                            @endif
-                        @endauth
                     </div>
                 </div>
             </div>

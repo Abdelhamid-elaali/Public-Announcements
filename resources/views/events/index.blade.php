@@ -30,21 +30,25 @@
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $event->title }}</h5>
-                                            <p class="card-text">{{ Str::limit($event->description, 150) }}</p>
-                                            <div class="mb-2">
-                                                <strong><i class="fas fa-calendar"></i> Date & Time:</strong> 
-                                                {{ $event->event_date->format('M d, Y H:i') }}
-                                            </div>
+                                            <p class="card-text">{{ Str::limit($event->content, 150) }}</p>
+                                            @if($event->event_date)
+                                                <div class="mb-2">
+                                                    <strong><i class="fas fa-calendar"></i> Date & Time:</strong> 
+                                                    {{ $event->event_date->format('M d, Y H:i') }}
+                                                </div>
+                                            @endif
                                             @if($event->location)
                                                 <div class="mb-2">
                                                     <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
                                                     {{ $event->location }}
                                                 </div>
                                             @endif
-                                            <div class="mb-2">
-                                                <strong><i class="fas fa-users"></i> Capacity:</strong> 
-                                                {{ $event->capacity }}
-                                            </div>
+                                            @if($event->max_participants)
+                                                <div class="mb-2">
+                                                    <strong><i class="fas fa-users"></i> Capacity:</strong> 
+                                                    {{ $event->max_participants }}
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="card-footer bg-transparent">
                                             <div class="d-flex justify-content-between align-items-center">

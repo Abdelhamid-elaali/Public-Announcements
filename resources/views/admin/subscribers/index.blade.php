@@ -17,6 +17,8 @@
                 <thead>
                     <tr>
                         <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>SMS Alerts</th>
                         <th>Subscribed At</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -26,6 +28,20 @@
                     @forelse($subscribers as $subscriber)
                         <tr>
                             <td>{{ $subscriber->email }}</td>
+                            <td>
+                                @if($subscriber->phone_number)
+                                    <span class="text-success">{{ $subscriber->phone_number }}</span>
+                                @else
+                                    <span class="text-muted">Not provided</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($subscriber->sms_enabled)
+                                    <span class="badge bg-success">Enabled</span>
+                                @else
+                                    <span class="badge bg-secondary">Disabled</span>
+                                @endif
+                            </td>
                             <td>{{ $subscriber->created_at->format('Y-m-d H:i') }}</td>
                             <td>
                                 <span class="badge bg-{{ $subscriber->is_active ? 'success' : 'warning' }}">
@@ -46,7 +62,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">No subscribers found.</td>
+                            <td colspan="6" class="text-center">No subscribers found.</td>
                         </tr>
                     @endforelse
                 </tbody>

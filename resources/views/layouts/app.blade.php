@@ -8,15 +8,67 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <!-- FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet'>
+    
+    <style>
+        :root {
+            --bs-primary: #25cffe;
+            --bs-primary-rgb: 37, 207, 254;
+        }
+        
+        .btn-primary {
+            background-color: #25cffe;
+            border-color: #25cffe;
+        }
+        
+        .btn-primary:hover,
+        .btn-primary:focus,
+        .btn-primary:active {
+            background-color: #1bb8e7 !important;
+            border-color: #1bb8e7 !important;
+        }
+        
+        .list-group-item.active {
+            background-color: #25cffe;
+            border-color: #25cffe;
+        }
+        
+        a {
+            color: #25cffe;
+        }
+        
+        a:hover {
+            color: #1bb8e7;
+        }
+        
+        .btn-outline-primary {
+            color: #25cffe;
+            border-color: #25cffe;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #25cffe;
+            border-color: #25cffe;
+        }
+        
+        .general-badge {
+            background-color: #5c6d7b;
+            color: white;
+        }
+    </style>
     
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background-color: #5c6d7b;">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name', 'Public Announcements') }}</a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img src="/images/logo.png" alt="Logo" height="40" width="45" style="border-radius: 15px;">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -88,5 +140,23 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
     
     @stack('scripts')
+
+    <script>
+        // Password toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.querySelector('#togglePassword');
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function() {
+                    const password = document.querySelector('#password');
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                    password.setAttribute('type', type);
+                    
+                    // Toggle the eye icon
+                    this.querySelector('i').classList.toggle('fa-eye');
+                    this.querySelector('i').classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
