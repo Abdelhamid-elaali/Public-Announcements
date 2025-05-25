@@ -30,9 +30,13 @@
             font-size: 1rem;
         }
         .btn-pro-nav {
-          border-width: 2px; /* Slightly thicker border for emphasis */
-          transition: all 0.3s ease; /* Smooth hover transition */
+            background-color: transparent;
+            border: 2px solid #17a2b8;
+            color: #17a2b8;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
         }
+        
 
         .btn-pro-nav:hover {
           background-color: #117a8b; /* Slightly darker shade of navbar color */
@@ -46,7 +50,7 @@
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center hover-lift" href="{{ route('admin.announcements.index') }}">
                 <i class="fas fa-user-shield fa-lg me-2"></i>
@@ -62,14 +66,38 @@
                             <i class="fas fa-bullhorn me-1"></i> Announcements
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('admin.announcements.create') ? 'active-nav-item' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ route('admin.announcements.create') }}">
-                            <i class="fas fa-plus-circle me-1"></i> Create New
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" 
-                           href="{{ route('admin.subscribers.index') }}">Subscribers</a>
+                           href="{{ route('admin.subscribers.index') }}">
+                           <i class="fas fa-users me-1"></i> Subscribers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" 
+                           href="{{ route('admin.users.index') }}">
+                           <i class="fas fa-user-shield me-1"></i> Users</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center hover-lift" href="#" 
+                           id="createDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-plus-circle me-2"></i> Create New
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="createDropdown">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center {{ request()->routeIs('admin.announcements.create') ? 'active' : '' }}" 
+                                   href="{{ route('admin.announcements.create') }}">
+                                    <i class="fas fa-bullhorn me-2"></i> Announcement
+                                </a>
+                            </li>
+                            @if(auth()->user()->role === 'admin')
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center {{ request()->routeIs('admin.users.create') ? 'active' : '' }}" 
+                                   href="{{ route('admin.users.create') }}">
+                                    <i class="fas fa-user-plus me-2"></i> Supervisor Account
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -91,7 +119,7 @@
         </div>
     </nav>
 
-    <main class="container">
+    <main class="container" style="margin-top: 5rem;">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}

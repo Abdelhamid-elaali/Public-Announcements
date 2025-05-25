@@ -4,6 +4,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AlertSubscriberController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +47,14 @@ Route::middleware(['auth', 'role:admin,supervisor'])->group(function () {
         // Admin-only routes
         Route::middleware(['role:admin'])->group(function () {
             Route::post('/alerts/send', [AlertSubscriberController::class, 'sendAlert'])->name('alerts.send');
+            
+            // User management routes
+            Route::get('/users', [UserController::class, 'index'])->name('users.index');
+            Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+            Route::post('/users', [UserController::class, 'store'])->name('users.store');
+            Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+            Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+            Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
         });
     });
 });

@@ -114,11 +114,12 @@ class AnnouncementController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/announcements');
-            $announcement->image = 'announcements/' . basename($imagePath);
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
             
-            // Ensure the file is publicly accessible
-            Storage::disk('public')->setVisibility('announcements/' . basename($imagePath), 'public');
+            // Store in public/storage/announcements directory
+            $image->move(public_path('storage/announcements'), $filename);
+            $announcement->image = 'announcements/' . $filename;
         }
         
         $announcement->save();
