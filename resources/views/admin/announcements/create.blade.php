@@ -34,13 +34,23 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select class="form-select @error('category') is-invalid @enderror" 
-                                    id="category" name="category" required>
+                                    id="category" name="category" required onchange="toggleCapacityField()">
                                 <option value="">Select a category</option>
                                 <option value="urgent" {{ old('category') === 'urgent' ? 'selected' : '' }}>Urgent</option>
                                 <option value="event" {{ old('category') === 'event' ? 'selected' : '' }}>Event</option>
                                 <option value="general" {{ old('category') === 'general' ? 'selected' : '' }}>General Information</option>
                             </select>
                             @error('category')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3" id="capacityField" style="display: none;">
+                            <label for="max_participants" class="form-label">Event Capacity</label>
+                            <input type="number" class="form-control @error('max_participants') is-invalid @enderror" 
+                                   id="max_participants" name="max_participants" value="{{ old('max_participants') }}" min="1">
+                            <div class="form-text">Maximum number of participants allowed for this event.</div>
+                            @error('max_participants')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -91,3 +101,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function toggleCapacityField() {
+        const category = document.getElementById('category').value;
+        const capacityField = document.getElementById('capacityField');
+        
+        if (category === 'event') {
+            capacityField.style.display = 'block';
+            document.getElementById('max_participants').required = true;
+        } else {
+            capacityField.style.display = 'none';
+            document.getElementById('max_participants').required = false;
+        }
+    }
+
+    // Run on page load to handle initial state
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleCapacityField();
+    });
+</script>
+@endpush

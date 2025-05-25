@@ -29,15 +29,26 @@
         .action-btn i {
             font-size: 1rem;
         }
+        .btn-pro-nav {
+          border-width: 2px; /* Slightly thicker border for emphasis */
+          transition: all 0.3s ease; /* Smooth hover transition */
+        }
+
+        .btn-pro-nav:hover {
+          background-color: #4a5966; /* Slightly darker shade of navbar color */
+          border-color: #4a5966; /* Match border to background */
+          transform: translateY(-1px); /* Subtle lift effect */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
     </style>
     
     @stack('styles')
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('admin.announcements.index') }}">
-            <img src="/images/logo.png" alt="Logo" height="50" width="50" style="border-radius: 15px;">
+            <img src="/images/logo.png" alt="Logo" height="40" width="45" style="border-radius: 15px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -55,15 +66,15 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Back to Site</a>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link">Logout</button>
-                        </form>
-                    </li>
+                  <li class="nav-item">
+                    <a class="btn btn-outline-light btn-pro-nav rounded-pill px-4 py-2 fw-medium" href="{{ route('home') }}">Back to Site</a>
+                  </li>
+                  <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                      @csrf
+                      <button type="submit" class="btn btn-outline-light btn-pro-nav rounded-pill px-4 py-2 fw-medium">Logout</button>
+                    </form>
+                  </li>
                 </ul>
             </div>
         </div>

@@ -89,11 +89,17 @@ class AnnouncementController extends Controller
             'category' => 'required',
             'status' => 'required|in:draft,published',
             'publish_at' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'max_participants' => $request->category === 'event' ? 'required|integer|min:1' : 'nullable'
         ]);
 
         $currentTime = now();
         $validated['created_by'] = auth()->id();
+
+        // Clear max_participants if not an event
+        if ($validated['category'] !== 'event') {
+            $validated['max_participants'] = null;
+        }
         
         // Set created_at and publish_at to current time for published announcements
         if ($validated['status'] === 'published') {
@@ -132,8 +138,14 @@ class AnnouncementController extends Controller
             'category' => 'required',
             'status' => 'required|in:draft,published',
             'publish_at' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'max_participants' => $request->category === 'event' ? 'required|integer|min:1' : 'nullable'
         ]);
+
+        // Clear max_participants if not an event
+        if ($validated['category'] !== 'event') {
+            $validated['max_participants'] = null;
+        }
 
         $currentTime = now();
         

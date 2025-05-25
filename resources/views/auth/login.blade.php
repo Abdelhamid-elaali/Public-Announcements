@@ -2,65 +2,76 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-transparent border-0 text-center py-4">
+                    <h3 class="text-center fw-light mb-0">
+                        <i class="fas fa-user-circle fa-2x mb-3 text-info"></i><br>
+                        Welcome Back
+                    </h3>
+                </div>
 
-                <div class="card-body">
+                <div class="card-body px-5 py-4">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="mb-4">
+                            <label for="email" class="form-label small fw-medium">{{ __('Email Address') }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-envelope text-muted"></i>
+                                </span>
+                                <input id="email" type="email" 
+                                       class="form-control border-start-0 @error('email') is-invalid @enderror" 
+                                       name="email" value="{{ old('email') }}" 
+                                       required autocomplete="email" autofocus 
+                                       placeholder="Enter your email">
                             </div>
+                            @error('email')
+                                <span class="invalid-feedback d-block mt-1" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary px-5 py-2" style="font-size: 1.1rem;">
-                                    {{ __('Login') }}
+                        <div class="mb-4">
+                            <label for="password" class="form-label small fw-medium">{{ __('Password') }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-lock text-muted"></i>
+                                </span>
+                                <input id="password" type="password" 
+                                       class="form-control border-start-0 @error('password') is-invalid @enderror" 
+                                       name="password" required 
+                                       autocomplete="current-password"
+                                       placeholder="Enter your password">
+                                <button class="btn btn-outline-secondary border-start-0" 
+                                        type="button" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
                                 </button>
                             </div>
+                            @error('password')
+                                <span class="invalid-feedback d-block mt-1" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" 
+                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label small" for="remember">
+                                    {{ __('Remember Me') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-pro-login py-2">
+                                <i class="fas fa-sign-in-alt me-2"></i>{{ __('Login') }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -68,4 +79,23 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const password = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        if (password.type === 'password') {
+            password.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            password.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+</script>
+@endpush
 @endsection
