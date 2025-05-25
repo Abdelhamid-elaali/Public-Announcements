@@ -18,7 +18,8 @@ class Announcement extends Model
         'publish_at',
         'created_by',
         'image',
-        'max_participants'
+        'max_participants',
+        'views'
     ];
 
     protected $casts = [

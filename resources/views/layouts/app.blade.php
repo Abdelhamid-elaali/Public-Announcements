@@ -60,9 +60,10 @@
             color: white;
         }
         .btn-pro-login {
-            border-width: 2px;
-            border-color:rgb(0, 0, 0);
-            color:rgb(0, 0, 0);
+            border-width: 4px;
+            border-color: #25cffe;
+            background-color:rgb(189, 194, 199);
+            color:black;
             padding: 12px 20px; /* Larger padding for a polished look */
             font-weight: 500; /* Slightly bolder text */
             border-radius: 15px; /* Rounded edges for modern look */
@@ -72,7 +73,9 @@
         .btn-pro-login:hover {
           background-color: #25cffe; /* Darker shade on hover */
           transform: translateY(-1px); /* Subtle lift effect */
-          color: #ffffff;
+          border-width: 4px;
+          border-color: rgb(189, 194, 199);
+          color: black;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
         }
         .btn-pro-nav {
@@ -83,7 +86,7 @@
         
         .btn-pro-nav:hover {
           background-color: #138496;
-          border-color: #117a8b;
+          border-color: #138496;
           color: #ffffff;
           transform: translateY(-1px);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -107,19 +110,58 @@
         }
 
         .hover-lift:hover {
-            transform: translateY(-2px);
-            opacity: 0.8;
+            transform: translateY(-0px);
+            opacity: 0.9;
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #25cffe;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #25cffe !important;
+        }
+
+        .navbar {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .active-nav-item::after {
+            width: 100%;
         }
     </style>
     
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background-color: #5c6d7b;">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4 bg-dark shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <img src="/images/logo.png" alt="Logo" height="40" width="45" style="border-radius: 15px;">
-                <span class="ms-2 fw-semibold">Attaouia Connect</span>
+            <a class="navbar-brand d-flex align-items-center hover-lift" href="{{ route('home') }}">
+                <img src="/images/logo.png" alt="Logo" height="40" width="45" 
+                     style="border-radius: 15px; transition: transform 0.3s ease;" 
+                     onmouseover="this.style.transform='scale(1.1)'" 
+                     onmouseout="this.style.transform='scale(1)'">
+                <span class="ms-2 fw-semibold" style="letter-spacing: 0.5px;">Attaouia Connect</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -138,23 +180,27 @@
                 
                 @auth
                 <ul class="navbar-nav">
-  @if(auth()->user()->role === 'admin' || auth()->user()->role === 'supervisor')
-    <li class="nav-item">
-        <a class="btn btn-outline-info btn-pro-nav rounded-pill px-4 py-2 fw-medium" href="{{ route('admin.announcements.index') }}">Admin Panel</a>
-    </li>
-  @endif
-  <li class="nav-item">
-    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-      @csrf
-      <button type="submit" class="btn btn-outline-info btn-pro-nav rounded-pill px-4 py-2 fw-medium">Logout</button>
-    </form>
-  </li>
-</ul>
+                    <li class="nav-item {{ request()->routeIs('admin.*') ? 'active-nav-item' : '' }}">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('admin.announcements.index') }}">
+                            <i class="fas fa-user-shield me-1"></i> Admin Panel
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn logout-button d-flex align-items-center">
+                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
                 @else
                     @if(!request()->routeIs('login'))
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="{{ route('login') }}" class="btn btn-pro-login rounded-pill px-4 py-2 fw-medium">Login</a>
+                                <a href="{{ route('login') }}" class="btn btn-pro-nav d-flex align-items-center">
+                                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                                </a>
                             </li>
                         </ul>
                     @endif
@@ -182,7 +228,7 @@
     </main>
 
     <footer class="bg-dark text-light mt-5 py-4">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     <h5 class="mb-3 fw-semibold">Attaouia Connect</h5>

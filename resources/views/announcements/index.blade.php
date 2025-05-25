@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 text-info">
         <h1>Public Announcements</h1>
     </div>
     <div class="col-md-4">
@@ -85,8 +85,10 @@
                     <div class="col-md-{{ $announcement->image ? '8' : '12' }}">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
-                        <h5 class="card-title">
-                            <a href="{{ route('announcements.show', $announcement) }}" class="text-decoration-none">
+                        <h5 class="card-title mb-2">
+                            <a href="{{ route('announcements.show', $announcement) }}" 
+                               class="text-decoration-none text-dark fw-bold" 
+                               style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 1.25rem;">
                                 {{ $announcement->title }}
                             </a>
                         </h5>

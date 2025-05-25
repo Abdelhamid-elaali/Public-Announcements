@@ -40,14 +40,16 @@ class AnnouncementController extends Controller
     public function show(Announcement $announcement)
     {
         // If user is not logged in or not an admin/supervisor
-        if (!auth()->check() || !auth()->user()->hasRole(['admin', 'supervisor'])) {
+        if (!auth()->check() || !in_array(auth()->user()->role, ['admin', 'supervisor'])) {
             if ($announcement->status !== 'published' || 
                 ($announcement->publish_at && $announcement->publish_at > now())) {
                 abort(404);
             }
         }
 
+        // Increment views count
         $announcement->increment('views');
+        
         return view('announcements.show', compact('announcement'));
     }
 

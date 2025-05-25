@@ -68,10 +68,52 @@
                         </div>
 
                         <div class="d-grid gap-2 mb-3">
-                            <button type="submit" class="btn btn-pro-login py-2">
-                                <i class="fas fa-sign-in-alt me-2"></i>{{ __('Login') }}
+                            <button type="submit" 
+                                    class="btn btn-pro-login py-2 position-relative overflow-hidden login-btn"
+                                    style="transition: all 0.3s ease;">
+                                <span class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    <span class="fw-medium" style="letter-spacing: 0.5px;">{{ __('Login') }}</span>
+                                </span>
                             </button>
                         </div>
+
+                        <style>
+                            .login-btn {
+                                border: none;
+                                background: linear-gradient(135deg, #25cffe, #138496);
+                                color: white;
+                                font-size: 1.1rem;
+                                border-radius: 12px;
+                                box-shadow: 0 4px 15px rgba(37, 207, 254, 0.2);
+                            }
+
+                            .login-btn:hover {
+                                transform: translateY(-2px);
+                                box-shadow: 0 6px 20px rgba(37, 207, 254, 0.3);
+                                color: white;
+                            }
+
+                            .login-btn:active {
+                                transform: translateY(0);
+                                box-shadow: 0 2px 10px rgba(37, 207, 254, 0.2);
+                            }
+
+                            .login-btn::before {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: -100%;
+                                width: 100%;
+                                height: 100%;
+                                background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+                                transition: 0.5s;
+                            }
+
+                            .login-btn:hover::before {
+                                left: 100%;
+                            }
+                        </style>
                     </form>
                 </div>
             </div>
