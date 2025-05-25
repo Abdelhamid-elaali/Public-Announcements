@@ -36,27 +36,26 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password" class="form-label small fw-medium">{{ __('Password') }}</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <i class="fas fa-lock text-muted"></i>
-                                </span>
-                                <input id="password" type="password" 
-                                       class="form-control border-start-0 @error('password') is-invalid @enderror" 
-                                       name="password" required 
-                                       autocomplete="current-password"
-                                       placeholder="Enter your password">
-                                <button class="btn btn-outline-secondary border-start-0" 
-                                        type="button" id="togglePassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            @error('password')
-                                <span class="invalid-feedback d-block mt-1" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+    <label for="password" class="form-label small fw-medium">{{ __('Password') }}</label>
+    <div class="input-group">
+        <span class="input-group-text bg-light border-end-0">
+            <i class="fas fa-lock text-muted"></i>
+        </span>
+        <input id="password" type="password" 
+               class="form-control border-start-0 @error('password') is-invalid @enderror" 
+               name="password" required 
+               autocomplete="current-password"
+               placeholder="Enter your password">
+        <span class="input-group-text bg-light border-start-0" id="togglePassword" style="cursor: pointer;">
+            <i class="fas fa-eye text-muted"></i>
+        </span>
+    </div>
+    @error('password')
+        <span class="invalid-feedback d-block mt-1" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
 
                         <div class="mb-4">
                             <div class="form-check">
@@ -82,18 +81,25 @@
 
 @push('scripts')
 <script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const password = document.getElementById('password');
-        const icon = this.querySelector('i');
-        
-        if (password.type === 'password') {
-            password.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            password.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
+    // Initialize password toggle functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        if (toggleBtn && passwordInput) {
+            toggleBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Toggle password visibility
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleBtn.querySelector('i').className = 'fas fa-eye-slash text-muted';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleBtn.querySelector('i').className = 'fas fa-eye text-muted';
+                }
+            };
         }
     });
 </script>
