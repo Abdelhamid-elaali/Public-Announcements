@@ -155,6 +155,18 @@
         padding: 0.5em 0.8em;
         font-weight: 500;
     }
+    .btn {
+        background: linear-gradient(135deg, #25cffe, #138496);
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(37, 207, 254, 0.2);
+    }
 </style>
 
 @push('scripts')

@@ -3,48 +3,38 @@
 @section('title', 'Manage Announcements')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Manage Announcements</h1>
-    <a href="{{ route('admin.announcements.create') }}" class="btn btn-primary">
-        Create New Announcement
-    </a>
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="text-dark mb-4">Manage Announcements</h1>
+    </div>
+    <div class="col-md-4">
+        <a href="{{ route('admin.announcements.create') }}" class="btn btn-primary w-100">
+            <i class="fas fa-plus-circle me-2"></i> Create New Announcement
+        </a>
+    </div>
 </div>
 
 <div class="row">
     <div class="col-md-3">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header bg-white">
                 <h5 class="card-title mb-0">Categories</h5>
             </div>
             <div class="list-group list-group-flush">
                 <a href="{{ route('admin.announcements.index') }}" 
-                   class="list-group-item list-group-item-action {{ !request('category') ? 'active' : '' }}">
-                    All Categories
-                    <span class="badge bg-secondary float-end">
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ !request('category') ? 'active' : '' }}">
+                    <span>All Categories</span>
+                    <span class="badge rounded-pill bg-primary">
                         {{ $categoryCounts->sum() }}
                     </span>
                 </a>
-                <a href="{{ route('admin.announcements.index', ['category' => 'urgent']) }}" 
-                   class="list-group-item list-group-item-action {{ request('category') === 'urgent' ? 'active' : '' }}">
-                    Urgent
-                    <span class="badge bg-danger float-end">
-                        {{ $categoryCounts['urgent'] ?? 0 }}
-                    </span>
-                </a>
-                <a href="{{ route('admin.announcements.index', ['category' => 'event']) }}" 
-                   class="list-group-item list-group-item-action {{ request('category') === 'event' ? 'active' : '' }}">
-                    Event
-                    <span class="badge bg-success float-end">
-                        {{ $categoryCounts['event'] ?? 0 }}
-                    </span>
-                </a>
-                <a href="{{ route('admin.announcements.index', ['category' => 'general']) }}" 
-                   class="list-group-item list-group-item-action {{ request('category') === 'general' ? 'active' : '' }}">
-                    General Information
-                    <span class="badge bg-info float-end">
-                        {{ $categoryCounts['general'] ?? 0 }}
-                    </span>
-                </a>
+                @foreach($categoryCounts as $category => $count)
+                    <a href="{{ route('admin.announcements.index', ['category' => $category]) }}" 
+                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ request('category') === $category ? 'active' : '' }}">
+                        <span>{{ ucfirst($category) }}</span>
+                        <span class="badge rounded-pill {{ $category === 'urgent' ? 'bg-danger' : ($category === 'event' ? 'bg-success' : 'bg-secondary') }}">{{ $count }}</span>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
@@ -119,6 +109,24 @@
     </div>
 </div>
 </div>
+<style>
+    .list-group-item.active {
+        background-color: #25cffe;
+        border-color: #25cffe;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #25cffe, #138496);
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(37, 207, 254, 0.2);
+    }
+</style>
 @endsection
 
 @push('scripts')

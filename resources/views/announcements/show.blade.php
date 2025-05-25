@@ -24,7 +24,7 @@
             @if($announcement->image)
                 <div class="mb-4">
                     <img src="{{ asset('storage/' . $announcement->image) }}" 
-                         class="img-fluid rounded" 
+                         class="img-fluid rounded h-50 w-50" 
                          alt="Image for {{ $announcement->title }}">
                 </div>
             @endif

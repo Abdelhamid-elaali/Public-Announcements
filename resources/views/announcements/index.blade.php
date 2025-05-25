@@ -161,6 +161,7 @@
 
     .card {
         border: none;
+        padding-top: 5px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         border-radius: 6px;

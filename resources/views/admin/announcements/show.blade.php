@@ -30,7 +30,7 @@
                 <div class="w-full h-64 overflow-hidden rounded-lg mb-4">
                     <img src="{{ asset('storage/' . $announcement->image) }}" 
                          alt="Image for {{ $announcement->title }}" 
-                         class="w-full h-full object-cover">
+                         class="w-50 h-50 object-cover">
                 </div>
             @endif
 
