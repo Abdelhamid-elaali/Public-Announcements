@@ -13,7 +13,7 @@ class AnnouncementController extends Controller
         $query = Announcement::query();
 
         // Filter by status
-        $query->where('status', 'published');
+        $query->where('status', '=', 'published');
 
         // Filter by category if provided
         if ($request->filled('category')) {
@@ -45,6 +45,13 @@ class AnnouncementController extends Controller
                 ($announcement->publish_at && $announcement->publish_at > now())) {
                 abort(404);
             }
+        }
+
+        // If this is an event announcement, redirect to the events page
+        if ($announcement->category === 'event') {
+            // Extract the event ID from the announcement content or use the announcement ID
+            $eventId = $announcement->id; // You might want to store the actual event ID in the announcement
+            return redirect()->route('events.show', $eventId);
         }
 
         // Increment views count
@@ -182,7 +189,7 @@ class AnnouncementController extends Controller
         if ($announcement->image) {
             Storage::disk('public')->delete($announcement->image);
         }
-        $announcement->delete();
+        $announcement->forceDelete();
         return redirect()->route('admin.announcements.index')
             ->with('success', 'Announcement deleted successfully.');
     }

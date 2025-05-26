@@ -24,13 +24,13 @@ Route::post('/alerts/unsubscribe', [AlertSubscriberController::class, 'unsubscri
 // Admin routes
 Route::middleware(['auth', 'role:admin,supervisor'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/announcements', [AnnouncementController::class, 'adminIndex'])->name('announcements.index');
-        Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
-        Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
-        Route::get('/announcements/{announcement}', [AnnouncementController::class, 'adminShow'])->name('announcements.show');
-        Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
-        Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
-        Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+        Route::get('/announcements', [\App\Http\Controllers\Admin\AnnouncementController::class, 'index'])->name('announcements.index');
+        Route::get('/announcements/create', [\App\Http\Controllers\Admin\AnnouncementController::class, 'create'])->name('announcements.create');
+        Route::post('/announcements', [\App\Http\Controllers\Admin\AnnouncementController::class, 'store'])->name('announcements.store');
+        Route::get('/announcements/{announcement}', [\App\Http\Controllers\Admin\AnnouncementController::class, 'show'])->name('announcements.show');
+        Route::get('/announcements/{announcement}/edit', [\App\Http\Controllers\Admin\AnnouncementController::class, 'edit'])->name('announcements.edit');
+        Route::put('/announcements/{announcement}', [\App\Http\Controllers\Admin\AnnouncementController::class, 'update'])->name('announcements.update');
+        Route::delete('/announcements/{announcement}', [\App\Http\Controllers\Admin\AnnouncementController::class, 'destroy'])->name('announcements.destroy');
         
         // Event routes
         Route::get('/events', [EventController::class, 'adminIndex'])->name('events.index');

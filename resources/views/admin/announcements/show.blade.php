@@ -48,6 +48,45 @@
                 </div>
                 <small>Views: {{ $announcement->views }}</small>
             </div>
+
+            @if($announcement->category === 'event')
+                <hr>
+                <div class="mt-4">
+                    <h4 class="mb-3">Event Registrations</h4>
+                    @if(isset($registrations) && $registrations->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Registered At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($registrations as $index => $registration)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $registration->name }}</td>
+                                            <td>{{ $registration->email }}</td>
+                                            <td>{{ $registration->created_at->format('F j, Y, g:i a') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-2 text-muted">
+                            <small>Total Registrations: {{ $registrations->count() }}</small>
+                        </div>
+                    @else
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No registrations yet for this event.
+                        </div>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 

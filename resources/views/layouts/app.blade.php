@@ -11,6 +11,11 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <!-- FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet'>
     
@@ -48,6 +53,15 @@
         .btn-outline-primary {
             color: #25cffe;
             border-color: #25cffe;
+        }
+
+        .brand-text {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 0.8px;
+            color: #25cffe;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
         }
         
         .btn-outline-primary:hover {
@@ -161,7 +175,7 @@
                      style="border-radius: 15px; transition: transform 0.3s ease;" 
                      onmouseover="this.style.transform='scale(1.1)'" 
                      onmouseout="this.style.transform='scale(1)'">
-                <span class="ms-2 fw-semibold" style="letter-spacing: 0.5px;">Attaouia Connect</span>
+                <span class="ms-2 brand-text">Attaouia Connect</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

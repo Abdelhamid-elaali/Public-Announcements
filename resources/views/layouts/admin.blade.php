@@ -11,6 +11,11 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         .action-btn {
             width: 32px;
@@ -45,6 +50,15 @@
           transform: translateY(-1px); /* Subtle lift effect */
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
         }
+        
+        .brand-text {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 0.8px;
+            color: #25cffe;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        }
     </style>
     
     @stack('styles')
@@ -54,7 +68,7 @@
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center hover-lift" href="{{ route('admin.announcements.index') }}">
                 <i class="fas fa-user-shield fa-lg me-2"></i>
-                <span style="letter-spacing: 0.5px;">Admin Panel</span>
+                <span class="ms-2 brand-text">Admin Panel</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
                 <span class="navbar-toggler-icon"></span>

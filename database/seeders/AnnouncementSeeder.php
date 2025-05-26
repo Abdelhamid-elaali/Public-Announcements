@@ -20,7 +20,8 @@ class AnnouncementSeeder extends Seeder
                 'category' => 'general',
                 'status' => 'published',
                 'publish_at' => now(),
-                'created_by' => $admin->id
+                'created_by' => $admin->id,
+                'image' => 'announcements/welcome.jpg'
             ],
             [
                 'title' => 'Important System Maintenance',
@@ -28,7 +29,8 @@ class AnnouncementSeeder extends Seeder
                 'category' => 'urgent',
                 'status' => 'published',
                 'publish_at' => now()->addDays(2),
-                'created_by' => $admin->id
+                'created_by' => $admin->id,
+                'image' => 'announcements/maintenance.jpg'
             ],
             [
                 'title' => 'New Features Coming Soon',
@@ -44,7 +46,9 @@ class AnnouncementSeeder extends Seeder
                 'category' => 'event',
                 'status' => 'published',
                 'publish_at' => now(),
-                'created_by' => $admin->id
+                'created_by' => $admin->id,
+                'max_participants' => 50,
+                'image' => 'announcements/meetup.jpg'
             ],
             [
                 'title' => 'Tech Workshop Series',
@@ -52,7 +56,8 @@ class AnnouncementSeeder extends Seeder
                 'category' => 'event',
                 'status' => 'published',
                 'publish_at' => now()->addWeek(),
-                'created_by' => $admin->id
+                'created_by' => $admin->id,
+                'image' => 'announcements/workshop.jpg'
             ]
         ];
 

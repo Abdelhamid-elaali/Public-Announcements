@@ -10,17 +10,12 @@ return new class extends Migration
     {
         Schema::create('event_registrations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('event_id');
+            $table->foreignId('event_id')
+                  ->constrained('announcements')
+                  ->onDelete('cascade');
             $table->string('email');
             $table->string('name');
             $table->timestamps();
-        });
-
-        Schema::table('event_registrations', function (Blueprint $table) {
-            $table->foreign('event_id')
-                  ->references('id')
-                  ->on('events')
-                  ->onDelete('cascade');
         });
     }
 

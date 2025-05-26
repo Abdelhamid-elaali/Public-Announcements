@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('category');
-            $table->enum('status', ['draft', 'published']);
+            $table->string('status')->default('published');
             $table->timestamp('publish_at')->nullable();
             $table->integer('views')->default(0);
             $table->foreignId('created_by')->constrained('users');

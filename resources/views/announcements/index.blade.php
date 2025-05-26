@@ -85,29 +85,42 @@
                         </div>
                     @endif
                     <div class="col-md-{{ $announcement->image ? '8' : '12' }}">
-                        <div class="h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <h5 class="card-title mb-2">
-                            <a href="{{ route('announcements.show', $announcement) }}" 
-                               class="text-decoration-none text-dark fw-bold" 
-                               style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 1.25rem;">
-                                {{ $announcement->title }}
-                            </a>
-                        </h5>
-                        <span class="badge {{ $announcement->category === 'urgent' ? 'bg-danger' : 
-                                                ($announcement->category === 'event' ? 'bg-success' : 'general-badge') }}">
-                            {{ ucfirst($announcement->category) }}
-                        </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title mb-0">
+                                    <a href="{{ route('announcements.show', $announcement) }}" 
+                                       class="text-decoration-none text-dark fw-bold">
+                                        {{ $announcement->title }}
+                                    </a>
+                                </h5>
+                                <span class="badge {{ $announcement->category === 'urgent' ? 'bg-danger' : 
+                                                    ($announcement->category === 'event' ? 'bg-success' : 'general-badge') }}">
+                                    {{ ucfirst($announcement->category) }}
+                                </span>
+                            </div>
+                            
+                            <p class="card-text text-muted small mb-3">
+                                <i class="fas fa-clock me-1"></i>
+                                Published {{ $announcement->created_at->diffForHumans() }}
+                            </p>
+
+                            <p class="card-text announcement-content mb-3">
+                                {{ Str::limit(strip_tags($announcement->content), 200) }}
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ route('announcements.show', $announcement) }}" 
+                                   class="btn btn-primary btn-sm read-more">
+                                    Read More
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <span class="text-muted small">
+                                        <i class="fas fa-eye me-1"></i> {{ $announcement->views }} views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="card-text">{{ Str::limit($announcement->content, 200) }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">
-                            Published {{ $announcement->publish_at ? $announcement->publish_at->diffForHumans() : 'recently' }}
-                        </small>
-                        <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-sm btn-primary">
-                            Read More
-                        </a>
                     </div>
                 </div>
                 @if($announcement->image)
@@ -147,8 +160,41 @@
         transition: transform 0.3s ease;
     }
 
+    .announcement-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        height:40%;
+    }
+
+    .announcement-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
     .announcement-card:hover .announcement-image img {
         transform: scale(1.05);
+    }
+
+    .announcement-card .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .announcement-content {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-title a {
+        color: #333;
+        font-size: 1.25rem;
+        line-height: 1.4;
+        transition: color 0.2s ease;
+    }
+
+    .card-title a:hover {
+        color: #0056b3;
     }
 
     .announcement-image img {
