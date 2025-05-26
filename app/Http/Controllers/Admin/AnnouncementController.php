@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AnnouncementController extends Controller
 {
@@ -53,5 +54,70 @@ class AnnouncementController extends Controller
         }
 
         return view('admin.announcements.show', compact('announcement'));
+    }
+
+    public function create()
+    {
+        return view('admin.announcements.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'category' => 'required|in:general,urgent,event',
+            'status' => 'required|in:draft,published',
+            'publish_at' => 'nullable|date'
+        ]);
+
+        if (!$validated['publish_at']) {
+            $validated['publish_at'] = Carbon::now();
+        }
+
+        // Add the authenticated user's ID
+        $validated['created_by'] = auth()->id();
+
+        $announcement = Announcement::create($validated);
+
+        return redirect()
+            ->route('admin.announcements.show', $announcement)
+            ->with('success', 'Announcement created successfully!');
+    }
+
+    public function edit(Announcement $announcement)
+    {
+        return view('admin.announcements.edit', compact('announcement'));
+    }
+
+    public function update(Request $request, Announcement $announcement)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'category' => 'required|in:general,urgent,event',
+            'status' => 'required|in:draft,published',
+            'publish_at' => 'nullable|date'
+        ]);
+
+        if (!$validated['publish_at']) {
+            $validated['publish_at'] = Carbon::now();
+        }
+
+        // Don't update created_by field
+        $announcement->update($validated);
+
+        return redirect()
+            ->route('admin.announcements.show', $announcement)
+            ->with('success', 'Announcement updated successfully!');
+    }
+
+    public function destroy(Announcement $announcement)
+    {
+        $announcement->delete();
+
+        return redirect()
+            ->route('admin.announcements.index')
+            ->with('success', 'Announcement deleted successfully!');
     }
 }

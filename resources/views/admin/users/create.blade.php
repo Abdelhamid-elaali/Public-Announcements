@@ -32,7 +32,8 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" 
-                                       name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                       name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
+                                       placeholder="Enter full name">
                             </div>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -46,7 +47,8 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                                       name="email" value="{{ old('email') }}" required autocomplete="email">
+                                       name="email" value="{{ old('email') }}" required autocomplete="email"
+                                       placeholder="Enter email address">
                             </div>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -60,7 +62,8 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                       name="password" required autocomplete="new-password">
+                                       name="password" required autocomplete="new-password"
+                                       placeholder="Enter password">
                                 <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                     <i class="fas fa-eye"></i>
                                 </button>
@@ -77,7 +80,8 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 <input id="password-confirm" type="password" class="form-control" 
-                                       name="password_confirmation" required autocomplete="new-password">
+                                       name="password_confirmation" required autocomplete="new-password"
+                                       placeholder="Confirm your password">
                                 <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
                                     <i class="fas fa-eye"></i>
                                 </button>

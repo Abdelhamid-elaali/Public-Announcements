@@ -16,8 +16,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     
-    <!-- FullCalendar CSS -->
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet'>
     
     <style>
         :root {
@@ -184,11 +182,21 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('announcements.*') ? 'active' : '' }}" 
-                           href="{{ route('announcements.index') }}">Announcements</a>
+                           href="{{ route('announcements.index') }}">
+                           <i class="fas fa-bullhorn me-1"></i>Announcements
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }}" 
-                           href="{{ route('events.index') }}">Events</a>
+                           href="{{ route('events.index') }}">
+                           <i class="fas fa-star me-1"></i>Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('calendar.*') ? 'active' : '' }}" 
+                           href="{{ route('calendar.index') }}">
+                           <i class="far fa-calendar-alt me-1"></i>Calendar
+                        </a>
                     </li>
                 </ul>
                 
@@ -266,11 +274,14 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- FullCalendar JS -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
+    @yield('styles')
+    @yield('scripts')
+    
     
     @stack('scripts')
 
